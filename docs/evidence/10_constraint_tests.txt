@@ -1,0 +1,67 @@
+INSERT 0 1
+      hasil       
+------------------
+ INSERT VALID: OK
+(1 row)
+
+ERROR:  duplicate key value violates unique constraint "mahasiswas_nim_key"
+DETAIL:  Key (nim)=(1247050115) already exists.
+            hasil             
+------------------------------
+ UNIQUE NIM: GAGAL (expected)
+(1 row)
+
+ERROR:  duplicate key value violates unique constraint "mahasiswas_email_key"
+DETAIL:  Key (email)=(muhammadkhansa067@gmail.com) already exists.
+             hasil              
+--------------------------------
+ UNIQUE EMAIL: GAGAL (expected)
+(1 row)
+
+ERROR:  new row for relation "mahasiswas" violates check constraint "mahasiswas_ipk_check"
+DETAIL:  Failing row contains (9, 1247050299, IPK Tinggi, ipk.tinggi@example.com, 2025, 4.50, 2026-11-01 15:02:27.15589+00).
+              hasil              
+---------------------------------
+ CHECK IPK > 4: GAGAL (expected)
+(1 row)
+
+ERROR:  new row for relation "mahasiswas" violates check constraint "mahasiswas_angkatan_check"
+DETAIL:  Failing row contains (10, 1247050300, Angkatan Lama, angkatan.lama@example.com, 2010, 3.00, 2026-11-01 15:02:27.156551+00).
+                  hasil                  
+-----------------------------------------
+ CHECK ANGKATAN < 2015: GAGAL (expected)
+(1 row)
+
+ERROR:  new row for relation "mahasiswas" violates check constraint "mahasiswas_nim_check"
+DETAIL:  Failing row contains (11, ABC123, NIM Salah, nim.salah@example.com, 2025, 3.00, 2026-11-01 15:02:27.156906+00).
+               hasil                
+------------------------------------
+ CHECK NIM FORMAT: GAGAL (expected)
+(1 row)
+
+ERROR:  new row for relation "mahasiswas" violates check constraint "mahasiswas_email_check"
+DETAIL:  Failing row contains (12, 1247050301, Email Salah, emailsalah, 2025, 3.00, 2026-11-01 15:02:27.157221+00).
+                hasil                 
+--------------------------------------
+ CHECK EMAIL FORMAT: GAGAL (expected)
+(1 row)
+
+ERROR:  new row for relation "komponen" violates check constraint "komponen_stok_check"
+DETAIL:  Failing row contains (11, TEST-NEG-1, Test Negatif, Test, 1000.00, -5, 2026-11-01 15:02:27.157495+00).
+                hasil                 
+--------------------------------------
+ CHECK STOK NEGATIF: GAGAL (expected)
+(1 row)
+
+ERROR:  new row for relation "komponen" violates check constraint "komponen_harga_check"
+DETAIL:  Failing row contains (12, TEST-NEG-2, Test Negatif, Test, -1000.00, 10, 2026-11-01 15:02:27.157894+00).
+                 hasil                 
+---------------------------------------
+ CHECK HARGA NEGATIF: GAGAL (expected)
+(1 row)
+
+                              hasil                              
+-----------------------------------------------------------------
+ KESIMPULAN: Semua constraint berfungsi seperti yang diharapkan.
+(1 row)
+

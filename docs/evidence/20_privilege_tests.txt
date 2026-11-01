@@ -1,0 +1,67 @@
+===== TEST PRIVILEGE =====
+
+--- backend_dev ---
+ count 
+-------
+     6
+(1 row)
+
+✓ SELECT berhasil
+INSERT 0 1
+✓ INSERT berhasil
+UPDATE 1
+✓ UPDATE berhasil
+DELETE 1
+✓ DELETE berhasil
+ERROR:  permission denied for schema SALAM
+LINE 1: CREATE TABLE "SALAM".test_tbl(id int);
+                     ^
+✓ CREATE TABLE ditolak (expected)
+ERROR:  must be owner of table komponen
+✓ DROP TABLE ditolak (expected)
+
+--- bi_dev ---
+ count 
+-------
+     6
+(1 row)
+
+✓ SELECT berhasil
+ proyek_id |              proyek               |           mahasiswa            | total_biaya 
+-----------+-----------------------------------+--------------------------------+-------------
+         1 | Modul Sensor Kelembaban Tanah IoT | Muhamad Khansa Khalifaturohman |   174500.00
+(1 row)
+
+✓ SELECT VIEW berhasil
+ERROR:  permission denied for table mahasiswas
+✓ INSERT ditolak (expected)
+ERROR:  permission denied for table mahasiswas
+✓ UPDATE ditolak (expected)
+ERROR:  permission denied for table mahasiswas
+✓ DELETE ditolak (expected)
+
+--- data_engineer ---
+CREATE TABLE
+✓ CREATE TABLE berhasil
+ALTER TABLE
+✓ ALTER TABLE berhasil
+INSERT 0 1
+✓ INSERT berhasil
+UPDATE 1
+✓ UPDATE berhasil
+ count 
+-------
+     1
+(1 row)
+
+✓ SELECT berhasil
+DROP TABLE
+✓ DROP TABLE berhasil
+ERROR:  permission denied to create role
+✓ CREATE ROLE ditolak (expected)
+
+--- Katalog Sistem ---
+✓ Daftar role ditemukan
+✓ Daftar schema ditemukan
+
+===== TEST SELESAI =====

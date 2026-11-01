@@ -1,0 +1,57 @@
+===== VIEW: v_biaya_bom_per_proyek (sebagai bi_dev) =====
+You are now connected to database "salam_db" as user "bi_dev".
+ proyek_id |              proyek               |           mahasiswa            | total_biaya 
+-----------+-----------------------------------+--------------------------------+-------------
+         1 | Modul Sensor Kelembaban Tanah IoT | Muhamad Khansa Khalifaturohman |   172500.00
+         2 | Regulator Catu Daya 5V DC         | Siti Nurhaliza                 |    85500.00
+         3 | Pengkondisi Sinyal ADC 12-bit     | Budi Santoso                   |   287000.00
+         4 | Kontroller Motor Stepper 3-Fase   | Rina Wijaya                    |   275000.00
+         5 | Modul Komunikasi I2C/SPI          | Dimas Pratama                  |    96500.00
+(5 rows)
+
+===== TRIGGER AUDIT: UPDATE stok komponen =====
+You are now connected to database "salam_db" as user "backend_dev".
+UPDATE 1
+ id |  tabel   |  aksi  |    oleh     |         terjadi_pada          |                          nilai_lama                           |                          nilai_baru                           
+----+----------+--------+-------------+-------------------------------+---------------------------------------------------------------+---------------------------------------------------------------
+  1 | komponen | UPDATE | backend_dev | 2026-11-01 15:02:28.287975+00 | {"stok": 150, "harga": 2500.00, "part_number": "RES-1K-1/4W"} | {"stok": 145, "harga": 2600.00, "part_number": "RES-1K-1/4W"}
+(1 row)
+
+===== TRANSAKSI ROLLBACK: kurangi_stok melebihi stok =====
+You are now connected to database "salam_db" as user "backend_dev".
+ part_number | stok 
+-------------+------
+ FUSE-500MA  |   50
+(1 row)
+
+BEGIN
+ERROR:  Stok tidak cukup untuk FUSE-500MA (tersedia 50, diminta 100)
+CONTEXT:  PL/pgSQL function "SALAM".kurangi_stok(text,integer) line 9 at RAISE
+ROLLBACK
+ part_number | stok 
+-------------+------
+ FUSE-500MA  |   50
+(1 row)
+
+Stok tidak berubah setelah rollback.
+===== TRANSAKSI BERHASIL: kurangi_stok dalam batas =====
+You are now connected to database "salam_db" as user "backend_dev".
+ part_number | stok 
+-------------+------
+ LED-RED-5MM |  100
+(1 row)
+
+BEGIN
+ kurangi_stok 
+--------------
+ 
+(1 row)
+
+COMMIT
+ part_number | stok 
+-------------+------
+ LED-RED-5MM |   90
+(1 row)
+
+Stok berkurang 10 setelah commit.
+===== FEATURE DEMO SELESAI =====
